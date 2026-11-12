@@ -411,3 +411,21 @@ and monitor costs while practising.
 > Scenario 2 compares the Source and Destination folder contents and
 > copies only the files that are present in Source but missing from
 > Destination.
+
+Let's test whether your pipeline avoids copying files again.
+1. Run Debug one more time.
+2. Since all four files now exist in the destination, Filter should return zero files.
+3. ForEach should execute zero iterations.
+4. No files should be copied.
+Expected result
+ Pipeline succeeds with 0 new copies.
+
+This is an important concept called idempotent processing: repeating the same operation should not create unnecessary duplicate work.
+Interview question
+Q: How do you copy only missing files from source to destination using Azure Data Factory?
+
+Answer: I use Get Metadata to retrieve file lists from both folders, Filter to identify files that don't exist in the destination, ForEach to iterate through the filtered files, and Copy Activity with dynamic dataset parameters to copy each missing file.
+
+One final reminder: because you're practising with an Azure Free Trial, check Cost Management after your exercises and remove resources when you no longer need them. 
+
+You've completed your first end-to-end ADF file-processing scenario!
