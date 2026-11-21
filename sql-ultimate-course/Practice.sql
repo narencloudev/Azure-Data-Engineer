@@ -381,4 +381,17 @@ DATEADD(MONTH, 1, OrderDate) AS OrderDatePlus1Month,
 DATEADD(YEAR, -1, OrderDate) AS OrderDatePlus1Year
 FROM Sales.Orders;
 
+---datediff
+SELECT
+BirthDate,
+DATEDIFF(DAY, BirthDate, GETDATE()) AS DaysSinceBirth,
+DATEDIFF(MONTH, BirthDate, GETDATE()) AS MonthsSinceBirth,
+DATEDIFF(YEAR, BirthDate, GETDATE()) AS YearsSinceBirth
+FROM Sales.Employees;
 
+--find the average shipping duration in days for each month
+SELECT
+month(OrderDate) AS OrderMonth,
+AVG(DATEDIFF(DAY, orderdate, ShipDate)) AS AvgShippingDuration
+from sales.orders
+group by month(OrderDate);
