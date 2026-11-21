@@ -269,8 +269,64 @@ CreationTime,
 GETDATE() Today
 FROM Sales.Orders;
 
+----DATEPART & DATENAME, YEAR, MONTH, DAY
+SELECT 
+OrderID,
+creationTime,
+YEAR(CreationTime) AS OrderYear,
+MONTH(CreationTime) AS OrderMonth,
+DAY(CreationTime) AS OrderDay,
+datepart(weekday, CreationTime) AS OrderWeekday,
+datepart(hour, CreationTime) AS OrderHour,
+datepart(quarter, CreationTime) AS OrderQuarter,
+datepart(minute, CreationTime) AS OrderMinute,
+datepart(second, CreationTime) AS OrderSecond
+FROM Sales.Orders;
+
+----datename example
+SELECT 
+OrderID,
+creationTime,
+YEAR(CreationTime) AS OrderYear,
+MONTH(CreationTime) AS OrderMonth,
+DAY(CreationTime) AS OrderDay,
+datename(weekday, CreationTime) AS OrderWeekday,
+datename(day, CreationTime) AS OrderDayName,
+datename(month, CreationTime) AS OrderMonthName,
+datename(year, CreationTime) AS OrderYearName
+FROM Sales.Orders;
 
 
+----datetrunc & dateadd
+SELECT 
+    OrderID,
+    CreationTime,
+    DATETRUNC(MINUTE, CreationTime) AS OrderMinuteTrunc,
+    DATETRUNC(HOUR, CreationTime) AS OrderHourTrunc,
+    DATETRUNC(DAY, CreationTime) AS OrderDayTrunc,
+    DATETRUNC(MONTH, CreationTime) AS OrderMonthTrunc,
+    DATETRUNC(YEAR, CreationTime) AS OrderYearTrunc
+FROM Sales.Orders;
+
+SELECT
+    DATETRUNC(year, CreationTime) AS OrderDate,
+    COUNT(*) AS TotalOrders
+FROM Sales.Orders
+GROUP BY DATETRUNC(year, CreationTime);
+
+----EOMONTH
+SELECT
+    OrderID,
+    CreationTime,
+    EOMONTH(CreationTime) AS OrderEndOfMonth,
+    datetrunc(month, CreationTime) AS OrderMonthTrunc,
+    cast(DATETRUNC(month, CreationTime) AS DATE) AS OrderMonthTruncDate
+FROM Sales.Orders;
 
 
-
+----how many orders were placed in each month?
+select
+MONTH(OrderDate) AS OrderMonth,
+COUNT(*) AS TotalOrders
+from sales.orders
+group by MONTH(OrderDate);
