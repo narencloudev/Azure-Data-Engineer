@@ -336,3 +336,49 @@ SELECT *
 from sales.orders
 WHERE MONTH(OrderDate) = 3;
 
+select *
+from sales.orders;
+
+---- formatting date
+SELECT
+    OrderID,
+    CreationTime,
+    'Day ' + FORMAT(CreationTime, 'ddd MMM') + 
+    ' Q' + DATENAME(quarter, CreationTime) + ' ' + FORMAT(CreationTime, 'yyyy hh:mm:ss tt') AS CustomFormatDay
+    from Sales.Orders;
+
+
+select
+Format(OrderDate, 'MMM yyyy') AS FormattedOrderDate,
+count(*) as TotalOrders
+from sales.orders
+group by Format(OrderDate, 'MMM yyyy');
+
+-----Converting data types
+SELECT
+CreationTime,
+CONVERT(DATE, CreationTime) AS [ConvertedCreationTime],
+CONVERT(VARCHAR(10), CreationTime, 34) AS [ConvertedCreationTime34],
+CONVERT(VARCHAR(10), CreationTime, 32) AS [ConvertedCreationTime32]
+from Sales.Orders;
+
+
+select
+cast('123' as int) as ConvertedInt,
+cast(123 as varchar(10)) as ConvertedVarchar,
+cast('2025-08-20' as date) as ConvertedDate,
+cast('2025-08-20' as DATETIME2) as ConvertedDate,
+CreationTime,
+cast(CreationTime as date) as [datetime to date]
+from Sales.Orders;
+
+----dateadd example
+SELECT
+OrderID,
+OrderDate,
+DATEADD(DAY, 7, OrderDate) AS OrderDatePlus7Days,
+DATEADD(MONTH, 1, OrderDate) AS OrderDatePlus1Month,
+DATEADD(YEAR, -1, OrderDate) AS OrderDatePlus1Year
+FROM Sales.Orders;
+
+
