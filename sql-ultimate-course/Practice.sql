@@ -326,7 +326,13 @@ FROM Sales.Orders;
 
 ----how many orders were placed in each month?
 select
-MONTH(OrderDate) AS OrderMonth,
+DATENAME(month, OrderDate) AS OrderMonth,
 COUNT(*) AS TotalOrders
 from sales.orders
-group by MONTH(OrderDate);
+group by DATENAME(month, OrderDate);
+
+---show all orders that were placed during the month of february, regardless of the year
+SELECT *
+from sales.orders
+WHERE MONTH(OrderDate) = 3;
+
