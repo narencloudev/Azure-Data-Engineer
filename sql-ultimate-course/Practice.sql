@@ -395,3 +395,7 @@ month(OrderDate) AS OrderMonth,
 AVG(DATEDIFF(DAY, orderdate, ShipDate)) AS AvgShippingDuration
 from sales.orders
 group by month(OrderDate);
+
+
+
+
